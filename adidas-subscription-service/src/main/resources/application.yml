@@ -1,0 +1,34 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
+server: 
+  port: 8096
+
+spring:
+  application:
+    name: adidas-subscription-service
+    
+feign:
+  client:
+    config:
+      adidas-database-service:
+      #  connectTimeout: 5000
+       # readTimeout: 5000
+        loggerLevel: full
+  hystrix:
+    enabled: true
+
+# To set thread isolation to SEMAPHORE
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          
+logging: 
+  level: 
+    com: 
+      adidas: DEBUG  

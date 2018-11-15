@@ -1,12 +1,7 @@
-package com.adidas.database.service.model;
-
+package com.adidas.subscription.service.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,13 +14,8 @@ import lombok.ToString;
 @Builder
 @Data
 @ToString
-@Entity
-@Table
 public class Subscription implements Serializable {
-	@Id
-	@GeneratedValue
-	public Integer subscriptionId;
-	
+
 	private String email;
 	
 	private String firstName;
@@ -37,4 +27,6 @@ public class Subscription implements Serializable {
 	private Boolean consent;
 	
 	private Integer newsletterId;
+	
+	private Integer subscriptionId;
 }
