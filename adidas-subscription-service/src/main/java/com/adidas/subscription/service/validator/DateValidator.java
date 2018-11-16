@@ -5,8 +5,10 @@ import static java.util.Optional.ofNullable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.adidas.subscription.DateProperties;
 import com.adidas.subscription.service.dto.DateParam;
 import com.adidas.subscription.service.exceptions.InvalidParamException;
 
@@ -28,13 +30,22 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DateValidator implements Validator<DateParam> {
 
+	@Autowired
+	private DateProperties props;
+	
+	private static final String DATE_EXCEPTION_MSG = "The format of the date is not valid. It must be %s";
+	private static final String NO_DATE_EXCEPTION_MSG = "The date field is not populated. Please populate it in the format %s";
 	@Override
 	public DateParam validate(DateParam source) {
-
-		ofNullable(source).orElseThrow(() -> new InvalidParamException("no date to parse"));
-		ofNullable(source.getDate()).orElseThrow(() -> new InvalidParamException("no date to parse"));
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		ofNullable(source).orElseThrow(() -> new InvalidParamException(NO_DATE_EXCEPTION_MSG));
+		ofNullable(source.getDate()).orElseThrow(() -> new InvalidParamException(NO_DATE_EXCEPTION_MSG));
+		
+		if(source.getDate().length() != 10) {
+			throw new InvalidParamException(String.format(DATE_EXCEPTION_MSG, props.getFormat()));
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(props.getFormat());
 		sdf.setLenient(false);
 		try {
 			sdf.parse(source.getDate());

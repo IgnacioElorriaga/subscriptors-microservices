@@ -31,7 +31,6 @@ public class DatabaseService {
 		log.debug("Requested: {}", obj);
 		log.info("Service is about to store data");
 		Integer saved = Optional.ofNullable(repo.findByEmail(obj.getEmail().toLowerCase()))
-				.filter(o -> o.getNewsletterId().equals(obj.getNewsletterId()))
 				.map(o -> o.getSubscriptionId())
 		.orElseGet(() -> repo.save(obj).getSubscriptionId());
 

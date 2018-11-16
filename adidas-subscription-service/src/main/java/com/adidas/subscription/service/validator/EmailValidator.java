@@ -1,5 +1,6 @@
 package com.adidas.subscription.service.validator;
 
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +44,7 @@ public class EmailValidator implements Validator<EmailParam> {
 		if (!isValid(source.getEmail())) {
 			throw new InvalidParamException("The format of the email is not correct.");
 		}
-
+		
 		return source;
 	}
 

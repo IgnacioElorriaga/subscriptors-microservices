@@ -1,6 +1,6 @@
 package com.adidas.subscription.service.facade;
 
-import com.adidas.subscription.service.dto.SubscriptionRequest;
+import com.adidas.subscription.client.model.SubscriptionRequest;
 
 public interface SubscriptionEventServiceFacade {
 

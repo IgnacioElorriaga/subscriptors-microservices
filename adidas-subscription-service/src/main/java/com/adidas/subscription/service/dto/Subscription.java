@@ -20,7 +20,7 @@ public class Subscription implements Serializable {
 	
 	private String firstName;
 	
-	private String gender;
+	private Gender gender;
 	
 	private LocalDate dateOfBirth;
 	

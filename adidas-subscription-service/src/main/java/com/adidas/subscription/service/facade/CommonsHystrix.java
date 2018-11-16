@@ -1,5 +1,6 @@
 package com.adidas.subscription.service.facade;
 
+import com.adidas.subscription.service.dto.Gender;
 import com.adidas.subscription.service.dto.Subscription;
 
 public class CommonsHystrix {
@@ -10,7 +11,7 @@ public class CommonsHystrix {
 				.dateOfBirth(null)
 				.email("")
 				.firstName("")
-				.gender("other")
+				.gender(Gender.OTHER)
 				.newsletterId(0)
 				.build();
 	}

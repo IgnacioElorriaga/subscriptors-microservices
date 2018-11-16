@@ -12,11 +12,13 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+
+import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.dto.DateParam;
 import com.adidas.subscription.service.dto.EmailParam;
+import com.adidas.subscription.service.dto.Gender;
 import com.adidas.subscription.service.dto.Response;
 import com.adidas.subscription.service.dto.Subscription;
-import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.InvalidParamException;
 import com.adidas.subscription.service.facade.SubscriptionDatabaseFacade;
 import com.adidas.subscription.service.facade.SubscriptionEmailServiceFacade;
@@ -46,7 +48,7 @@ public class SubscriptionServiceTest {
 		Subscription defaultSubscription = Subscription.builder()
 				.consent(Boolean.TRUE).dateOfBirth(LocalDate.now()).email("abc@ad.com").firstName("tester")
 				.newsletterId(12)
-				.gender("male")
+				.gender(Gender.MALE)
 				.subscriptionId(234)
 				.build();
 		when(facadeEmail.processEmail(any())).thenReturn(defaultSubscription);
@@ -60,7 +62,7 @@ public class SubscriptionServiceTest {
 		SubscriptionRequest request = SubscriptionRequest.builder()
 				.consent(Boolean.TRUE).dateOfBirth(LocalDate.now().toString()).email("abc@ad.com").firstName("tester")
 				.newsletterId(12)
-				.gender("male")
+				.gender(Gender.lookup(Gender.MALE))
 		.build();
 		when(emailAddressValidator.validate(any())).thenReturn(EmailParam.builder().email("abc@ad.com").build());
 		when(dateValidator.validate(any())).thenReturn(DateParam.builder().date("2018-12-12").build());
@@ -81,7 +83,7 @@ public class SubscriptionServiceTest {
 		SubscriptionRequest request = SubscriptionRequest.builder()
 				.consent(Boolean.TRUE).dateOfBirth(LocalDate.now().toString()).email("abcad.com").firstName("tester")
 				.newsletterId(12)
-				.gender("male")
+				.gender(Gender.lookup(Gender.MALE))
 		.build();
 		service.createSubscription(request);
 		
@@ -99,7 +101,7 @@ public class SubscriptionServiceTest {
 		SubscriptionRequest request = SubscriptionRequest.builder()
 				.consent(Boolean.TRUE).dateOfBirth(LocalDate.now().toString()).email("abcad.com").firstName("tester")
 				.newsletterId(12)
-				.gender("male")
+				.gender(Gender.lookup(Gender.MALE))
 		.build();
 		service.createSubscription(request);
 		
