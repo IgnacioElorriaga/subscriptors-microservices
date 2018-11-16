@@ -2,7 +2,6 @@ package com.adidas.database.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,12 +25,6 @@ public class DatabaseController {
 	public Response create(@RequestBody SubscriptionRequest body) {
 
 		return Response.builder().subscriptionId(service.create(body)).build();
-	}
-
-	@GetMapping("/database/subscriptions")
-	@CrossOrigin
-	public String echo() {
-		return "Hi there!";
 	}
 
 }

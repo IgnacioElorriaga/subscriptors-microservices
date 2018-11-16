@@ -33,5 +33,4 @@ date:
            
 logging: 
   level: 
-    com: 
-      adidas: DEBUG  
+    com: DEBUG  

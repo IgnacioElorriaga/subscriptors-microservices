@@ -1,0 +1,23 @@
+---
+
+spring:
+  application:
+    name: adidas-subscription-service
+    
+feign:
+  client:
+    config:
+      adidas-database-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full
+  hystrix:
+    enabled: false
+
+# To set thread isolation to SEMAPHORE
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE

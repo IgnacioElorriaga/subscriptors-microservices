@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.adidas.subscription.client.EventServiceFeignClient;
+import com.adidas.subscription.client.model.EventResponse;
 import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.MicroserviceException;
 import com.adidas.subscription.service.exceptions.UnknownException;
@@ -27,9 +28,9 @@ public class SubscriptionEventServiceFacadeFeignImpl implements SubscriptionEven
 			log.info("Processing request to event service");
 			log.debug("Request to process {}", request);
 			
-			client.triggerSubscription(request);
+			EventResponse response = client.triggerSubscription(request);
 			
-			log.info("Subscription executed.");
+			log.info("Subscription executed. Response received: {}", response.getAnswer());
 			
 		}catch(HystrixRuntimeException e) {
 			throw new MicroserviceException(e);

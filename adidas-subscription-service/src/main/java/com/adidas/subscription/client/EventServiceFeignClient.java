@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.adidas.subscription.client.model.EventResponse;
 import com.adidas.subscription.client.model.SubscriptionRequest;
 
 /**
@@ -31,5 +32,5 @@ public interface EventServiceFeignClient {
 			 method = POST, 
 			 consumes = APPLICATION_JSON_UTF8_VALUE, 
 			 produces = APPLICATION_JSON_UTF8_VALUE)
-	 void triggerSubscription(@RequestBody SubscriptionRequest body);
+	EventResponse triggerSubscription(@RequestBody SubscriptionRequest body);
 }

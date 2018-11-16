@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.adidas.subscription.client.model.DatabaseResponse;
 import com.adidas.subscription.client.model.SubscriptionRequest;
-import com.adidas.subscription.service.dto.Subscription;
 
 /**
  * Feign client to connect to the database. It will execute the indicated path,
@@ -34,5 +34,6 @@ public interface DatabaseServiceFeignClient {
 			 
 			 consumes = APPLICATION_JSON_UTF8_VALUE, 
 			 produces = APPLICATION_JSON_UTF8_VALUE)
-	  @ResponseBody Subscription createSubscription(@RequestBody SubscriptionRequest body);
+	@ResponseBody
+	DatabaseResponse createSubscription(@RequestBody SubscriptionRequest body);
 }

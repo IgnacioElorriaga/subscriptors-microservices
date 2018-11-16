@@ -8,7 +8,7 @@ server:
 
 spring:
   application:
-    name: adidas-email-service
+    name: adidas-event-service
   
 songs: 
   - We Will Rock You

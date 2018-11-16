@@ -24,7 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.adidas.subscription.client.DatabaseServiceFeignClient;
 import com.adidas.subscription.client.EmailServiceFeignClient;
 import com.adidas.subscription.client.EventServiceFeignClient;
-import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.client.model.DatabaseResponse;
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
@@ -38,6 +38,7 @@ public class SubscriptionControllerTest {
 	private MockMvc mockMvc;
 	@MockBean
 	private DatabaseServiceFeignClient clientDatabase;
+
 	@MockBean
 	private EmailServiceFeignClient clientEmail;
 	@MockBean
@@ -51,7 +52,8 @@ public class SubscriptionControllerTest {
 
 	@Test
 	public void createOk() throws Exception {
-		when(clientDatabase.createSubscription(any())).thenReturn(Subscription.builder().subscriptionId(23).build());
+		when(clientDatabase.createSubscription(any()))
+				.thenReturn(DatabaseResponse.builder().subscriptionId(23).build());
 
 		when(clientEmail.checkEmail(any())).thenReturn(Boolean.TRUE);
 

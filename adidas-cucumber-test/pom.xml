@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.adidas</groupId>
-	<artifactId>subscription</artifactId>
+	<artifactId>test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>adidas-subscription-service</name>
-	<description>Microservice for subscriptions in the Adidas challenge</description>
+	<name>adidas-cucumber-test</name>
+	<description>BDD Testing</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
