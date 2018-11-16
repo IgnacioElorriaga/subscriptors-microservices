@@ -14,16 +14,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.SubscriptionService;
 import com.adidas.subscription.service.dto.Response;
-import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 
+/**
+ * Controller layer for the microservice. Defines an endpoint for the
+ * application. In that case "/subscriptions" where the consumers will send the
+ * info via POST (we are creating a new subscription).
+ * 
+ * For the next iterations / Sprints / ... the actions:
+ * <li>GET (read of one subscription by email or whatever),</li>
+ * <li>PATCH to update some data of it,</li>
+ * <li>DELETE to unsubscribe</li> could be delivered. In this layer we only need
+ * to call to the Model / Service layer where the logic will be stored,
+ * following the rule of slim controllers - fat services.
+ * 
+ * The validation for the input data is done through the annotations
+ * {@linkplain Validated} at class level and {@linkplain Valid} on the DTO and
+ * inside the DTO with the specific annotation.
+ * 
+ * @author nacho
+ *
+ */
 @RestController
 @AllArgsConstructor
 @Validated
@@ -32,8 +50,8 @@ public class SubscriptionController {
 	private SubscriptionService service;
 
 	@GetMapping
-	public String get() {
-		return "Hola";
+	public String echo() {
+		return "Ey echo!";
 	}
 
 	@CrossOrigin

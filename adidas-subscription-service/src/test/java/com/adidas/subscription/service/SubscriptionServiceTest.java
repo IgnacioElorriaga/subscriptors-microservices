@@ -12,12 +12,11 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.dto.DateParam;
 import com.adidas.subscription.service.dto.EmailParam;
 import com.adidas.subscription.service.dto.Response;
 import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.InvalidParamException;
 import com.adidas.subscription.service.facade.SubscriptionDatabaseFacade;
 import com.adidas.subscription.service.facade.SubscriptionEmailServiceFacade;

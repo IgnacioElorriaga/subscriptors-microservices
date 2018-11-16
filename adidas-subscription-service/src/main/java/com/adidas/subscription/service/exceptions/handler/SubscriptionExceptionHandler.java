@@ -16,35 +16,45 @@ import com.adidas.subscription.service.exceptions.UnknownException;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Own Exception handler for the different errors processed inside the logic or
+ * when executing any FeignClient.
+ * <p>
+ * To simplify the process, it was only defined a Bad Request (400) for all the
+ * invalid input parameters and Internal Server Error (500) when we receive any
+ * error executing logic from others microservices.
+ * </p>
+ * 
+ * @author nacho
+ *
+ */
 @Slf4j
 @ControllerAdvice
 @RequestMapping(produces = "application/vnd.error+json")
 public class SubscriptionExceptionHandler {
-	
+
 	@ExceptionHandler(InvalidParamException.class)
-	  public ResponseEntity<VndErrors> handleInvalidParamException(InvalidParamException e,
-	    WebRequest request) {
+	public ResponseEntity<VndErrors> handleInvalidParamException(InvalidParamException e, WebRequest request) {
 		log.error("Error while trying to process an input parameter", e);
 		return error(e, HttpStatus.BAD_REQUEST, "");
-	  }
+	}
+
 	@ExceptionHandler(MicroserviceException.class)
-	  public ResponseEntity<VndErrors> handleMicroserviceException(MicroserviceException e,
-	    WebRequest request) {
+	public ResponseEntity<VndErrors> handleMicroserviceException(MicroserviceException e, WebRequest request) {
 		log.error("Error while trying to process the request in the Feign Client", e);
 		return error(e, HttpStatus.INTERNAL_SERVER_ERROR, "");
-	  }
+	}
+
 	@ExceptionHandler(UnknownException.class)
-	  public ResponseEntity<VndErrors> handleUnknownException(final UnknownException e,
-	    WebRequest request) {
+	public ResponseEntity<VndErrors> handleUnknownException(final UnknownException e, WebRequest request) {
 		log.error("Unexpected error", e);
 		return error(e, HttpStatus.INTERNAL_SERVER_ERROR, "");
-		
-	  }
-	
-	 private ResponseEntity<VndErrors> error(
-		      final Exception exception, final HttpStatus httpStatus, final String logRef) {
-		    final String message =
-		        Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
-		    return new ResponseEntity<>(new VndErrors(logRef, message), httpStatus);
-		  }
+
+	}
+
+	private ResponseEntity<VndErrors> error(final Exception exception, final HttpStatus httpStatus,
+			final String logRef) {
+		final String message = Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
+		return new ResponseEntity<>(new VndErrors(logRef, message), httpStatus);
+	}
 }

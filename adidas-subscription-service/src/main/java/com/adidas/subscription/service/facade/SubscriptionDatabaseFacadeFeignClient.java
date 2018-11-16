@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.adidas.subscription.client.DatabaseServiceFeignClient;
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.converter.SubscriptionRequestToSubscriptionConverter;
 import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.MicroserviceException;
 import com.adidas.subscription.service.exceptions.UnknownException;
 import com.netflix.hystrix.exception.HystrixRuntimeException;

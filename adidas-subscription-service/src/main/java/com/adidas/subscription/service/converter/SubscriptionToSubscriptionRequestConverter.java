@@ -3,8 +3,8 @@ package com.adidas.subscription.service.converter;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 
 @Component
 public class SubscriptionToSubscriptionRequestConverter implements Converter<Subscription, SubscriptionRequest> {

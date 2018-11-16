@@ -1,6 +1,5 @@
 package com.adidas.subscription.service.validator;
 
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +11,19 @@ import com.adidas.subscription.service.exceptions.InvalidParamException;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validates the format of the input email.<br/>
+ * For the flow, it doesn't matter it is already validated with the NotNull
+ * because it could be also empty and in that case would be valid.<br/>
+ * In case the email is not present or empty, it will raise an exception.<br/>
+ * Same case will be when the REGEX fails, it was the easiest to valid
+ * 
+ * "at least one character plus @ symbol plus at least one character plus dot
+ * plus at least one char"
+ * 
+ * @author nacho
+ *
+ */
 @Component
 @AllArgsConstructor
 public class EmailValidator implements Validator<EmailParam> {
@@ -31,7 +43,7 @@ public class EmailValidator implements Validator<EmailParam> {
 		if (!isValid(source.getEmail())) {
 			throw new InvalidParamException("The format of the email is not correct.");
 		}
-		
+
 		return source;
 	}
 

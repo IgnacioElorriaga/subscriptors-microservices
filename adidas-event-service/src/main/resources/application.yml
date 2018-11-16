@@ -1,0 +1,33 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
+server: 
+  port: 8092
+
+spring:
+  application:
+    name: adidas-email-service
+  
+songs: 
+  - We Will Rock You
+  - Thunderstruck
+  - Bohemian rhapsody
+  - Another one bites the dust
+  - Stairway to Heaven
+  - Free Bird
+  - Help!
+  - Here Comes the Sun
+  - Smoke On The Water 
+  - Welcome to the Jungle
+  - Smells Like Teen Spirit
+  - Layla
+  - Sweet Child O Mine
+  - Zombie
+  - Numb
+  - Kashmir
+  - Hey Jude
+  - Yesterday
+  - Abbey Road
+  - Penny Lane

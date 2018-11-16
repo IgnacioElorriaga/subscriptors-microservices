@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.adidas.subscription.client.EmailServiceFeignClient;
 import com.adidas.subscription.client.model.Email;
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.converter.SubscriptionRequestToSubscriptionConverter;
 import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.UnknownException;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
