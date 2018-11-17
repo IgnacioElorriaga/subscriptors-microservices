@@ -3,6 +3,15 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8010/eureka/
+adidas-database-service:
+  ribbon: 
+    listOfServers: http://localhost:8010
+adidas-event-service:
+  ribbon: 
+    listOfServers: http://localhost:8010
+adidas-email-service:
+  ribbon: 
+    listOfServers: http://localhost:8010
 server: 
   port: 8096
 
@@ -13,6 +22,10 @@ spring:
 feign:
   client:
     config:
+      adidas-event-service:
+#        connectTimeout: 5000
+#        readTimeout: 5000
+        loggerLevel: full
       adidas-database-service:
       #  connectTimeout: 5000
        # readTimeout: 5000
@@ -30,7 +43,7 @@ hystrix:
 
 date:
   format: yyyy-MM-dd
-           
+               
 logging: 
   level: 
     com: DEBUG  

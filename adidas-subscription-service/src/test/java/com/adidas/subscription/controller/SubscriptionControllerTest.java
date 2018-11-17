@@ -1,6 +1,7 @@
 package com.adidas.subscription.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -57,7 +58,7 @@ public class SubscriptionControllerTest {
 
 		when(clientEmail.checkEmail(any())).thenReturn(Boolean.TRUE);
 
-		doNothing().when(clientEvent).triggerSubscription(any());
+		doNothing().when(clientEvent).triggerSubscription(anyString(), any());
 
 		mockMvc.perform(post("/subscriptions").contentType(APPLICATION_JSON)
 				.content("{\"email\":\"abc@ad.com\", \n" + "\"firstName\":\"Unity\", \n" + "\"gender\":\"male\", \n"

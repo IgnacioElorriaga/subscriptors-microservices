@@ -7,8 +7,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 
-import com.adidas.subscription.service.dto.Response;
-import com.adidas.subscription.service.dto.SubscriptionRequest;
+import subscriptions.model.Response;
+import subscriptions.model.SubscriptionRequest;
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration

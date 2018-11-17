@@ -3,6 +3,7 @@ package com.adidas.subscription.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adidas.subscription.client.model.EventRequest;
 import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.dto.DateParam;
 import com.adidas.subscription.service.dto.EmailParam;
@@ -63,7 +64,7 @@ public class SubscriptionService {
 		validateGender(request.getGender());
 
 		Subscription subscription = facadeDatabase.save(request);
-		facadeEvent.executeEvent(request);
+		facadeEvent.executeEvent(EventRequest.builder().subscriptionId(subscription.getSubscriptionId()).build());
 		facadeEmail.processEmail(request);
 		return Response.builder().subscriptionId(subscription.getSubscriptionId()).build();
 	}

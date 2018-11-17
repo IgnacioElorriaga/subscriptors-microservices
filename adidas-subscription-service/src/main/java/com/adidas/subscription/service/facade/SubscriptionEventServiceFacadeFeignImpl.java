@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.adidas.subscription.client.EventServiceFeignClient;
+import com.adidas.subscription.client.model.EventRequest;
 import com.adidas.subscription.client.model.EventResponse;
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.MicroserviceException;
 import com.adidas.subscription.service.exceptions.UnknownException;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
@@ -23,12 +23,13 @@ public class SubscriptionEventServiceFacadeFeignImpl implements SubscriptionEven
 	
 	//@HystrixCommand(fallbackMethod = "fallbackExecuteEvent", commandKey = "executeEvent")
 	@Override
-	public void executeEvent(SubscriptionRequest request) {
+	public void executeEvent(EventRequest request) {
 		try {
 			log.info("Processing request to event service");
 			log.debug("Request to process {}", request);
 			
-			EventResponse response = client.triggerSubscription(request);
+			EventResponse response = client.triggerSubscription("Basic YWRpZGFzLWRhdGFiYXNlLXNlcnZpY2U6MTIzNDU2",
+					request);
 			
 			log.info("Subscription executed. Response received: {}", response.getAnswer());
 			
@@ -40,7 +41,7 @@ public class SubscriptionEventServiceFacadeFeignImpl implements SubscriptionEven
 
 	}
 
-	public void fallbackExecuteEvent(SubscriptionRequest request) {
+	public void fallbackExecuteEvent(EventRequest request) {
 		log.error("Hystrix circuit opened for event service. Doing nothing");
 	}
 }

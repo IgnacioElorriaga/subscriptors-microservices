@@ -1,8 +1,7 @@
 package com.adidas.database.service;
 
-import java.util.Optional;
+import static java.util.Optional.ofNullable;
 
-import org.hibernate.query.criteria.internal.CriteriaSubqueryImpl.SubquerySelection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +29,8 @@ public class DatabaseService {
 
 		log.debug("Requested: {}", obj);
 		log.info("Service is about to store data");
-		Integer saved = Optional.ofNullable(repo.findByEmail(obj.getEmail().toLowerCase()))
+		Integer saved = ofNullable(
+				repo.findByEmailAndNewsletterId(obj.getEmail().toLowerCase(), subscription.getNewsletterId()))
 				.map(o -> o.getSubscriptionId())
 		.orElseGet(() -> repo.save(obj).getSubscriptionId());
 

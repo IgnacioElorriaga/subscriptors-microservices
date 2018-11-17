@@ -4,13 +4,12 @@ import java.time.LocalDate;
 
 import org.junit.Assert;
 
-import com.adidas.subscription.service.dto.Gender;
-import com.adidas.subscription.service.dto.Response;
-import com.adidas.subscription.service.dto.SubscriptionRequest;
-
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import subscriptions.model.Gender;
+import subscriptions.model.Response;
+import subscriptions.model.SubscriptionRequest;
 
 public class SubscriptionSteps extends SpringBootBaseIntegrationTest{
 	

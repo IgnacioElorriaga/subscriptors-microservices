@@ -5,10 +5,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.adidas.subscription.client.model.EventRequest;
 import com.adidas.subscription.client.model.EventResponse;
-import com.adidas.subscription.client.model.SubscriptionRequest;
 
 /**
  * Feign client to connect to the events. 
@@ -32,5 +34,7 @@ public interface EventServiceFeignClient {
 			 method = POST, 
 			 consumes = APPLICATION_JSON_UTF8_VALUE, 
 			 produces = APPLICATION_JSON_UTF8_VALUE)
-	EventResponse triggerSubscription(@RequestBody SubscriptionRequest body);
+	@ResponseBody
+	EventResponse triggerSubscription(@RequestHeader("Authentication") final String username,
+			@RequestBody EventRequest body);
 }

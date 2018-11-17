@@ -9,25 +9,15 @@ server:
 spring:
   application:
     name: adidas-event-service
-  
-songs: 
-  - We Will Rock You
-  - Thunderstruck
-  - Bohemian rhapsody
-  - Another one bites the dust
-  - Stairway to Heaven
-  - Free Bird
-  - Help!
-  - Here Comes the Sun
-  - Smoke On The Water 
-  - Welcome to the Jungle
-  - Smells Like Teen Spirit
-  - Layla
-  - Sweet Child O Mine
-  - Zombie
-  - Numb
-  - Kashmir
-  - Hey Jude
-  - Yesterday
-  - Abbey Road
-  - Penny Lane
+ 
+logging: 
+  level: 
+    org: 
+      springframework: 
+        web: DEBUG
+security: 
+  user: 
+    name: user
+    password: password
+  basic: 
+    enabled: true
