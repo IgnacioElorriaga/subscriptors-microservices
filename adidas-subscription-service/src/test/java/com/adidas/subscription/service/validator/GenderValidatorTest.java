@@ -14,67 +14,65 @@ import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.exceptions.InvalidParamException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EmailValidatorTest {
+public class GenderValidatorTest {
 
 	@InjectMocks
 	private RequestValidator validator;
+
 	@Before
 	public void setUp() {
 		initMocks(this);
 	}
 
 	@Test
-	public void validateDateOk() {
+	public void genderOkFemale() {
 		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
 				.email("abc@ad.com").firstName("User of JUnit").gender(Gender.FEMALE.name().toLowerCase())
 				.newsletterId(1234).build();
 		SubscriptionRequest validated = validator.validate(request);
-		Assert.assertEquals("1980-08-15", validated.getDateOfBirth());
+		Assert.assertEquals(request.getGender(), validated.getGender());
 	}
+
 	@Test
-	public void validateOkTwoDomains() {
+	public void genderOkMale() {
 		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email("abc@ad.co.uk").firstName("User of JUnit").gender(Gender.FEMALE.name().toLowerCase())
+				.email("abc@ad.com").firstName("User of JUnit").gender(Gender.MALE.name().toLowerCase())
 				.newsletterId(1234).build();
 		SubscriptionRequest validated = validator.validate(request);
-		Assert.assertEquals("abc@ad.co.uk", validated.getEmail());
+		Assert.assertEquals(request.getGender(), validated.getGender());
+	}
+
+	@Test
+	public void genderOkOther() {
+		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
+				.email("abc@ad.com").firstName("User of JUnit").gender(Gender.OTHER.name().toLowerCase())
+				.newsletterId(1234).build();
+		SubscriptionRequest validated = validator.validate(request);
+		Assert.assertEquals(request.getGender(), validated.getGender());
 	}
 
 	@Test(expected = InvalidParamException.class)
-	public void validateFail() {
+	public void genderFailNoCorrespondency() {
 		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email("abcad.co.uk").firstName("User of JUnit").gender(Gender.FEMALE.name().toLowerCase())
-				.newsletterId(1234).build();
+				.email("abc@ad.com").firstName("User of JUnit").gender("Brother").newsletterId(1234).build();
 		validator.validate(request);
-	}
-	
-	@Test(expected = InvalidParamException.class)
-	public void validateFailNoDomain() {
-		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email("abc@adcom").firstName("User of JUnit").gender(Gender.OTHER.name().toLowerCase())
-				.newsletterId(1234).build();
-		validator.validate(request);
-	}
-	@Test(expected = InvalidParamException.class)
-	public void validateFailNoUser() {
-		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email("@adcom").firstName("User of JUnit").gender(Gender.MALE.name().toLowerCase()).newsletterId(1234)
-				.build();
-		validator.validate(request);
+
 	}
 
-	@Test(expected = InvalidParamException.class)
-	public void validateFailEmpty() {
+	@Test
+	public void genderOkNull() {
 		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email("").firstName("User of JUnit").gender(Gender.FEMALE.name().toLowerCase()).newsletterId(1234)
-				.build();
-		validator.validate(request);
+				.email("abc@ad.com").firstName("User of JUnit").gender(null).newsletterId(1234).build();
+		SubscriptionRequest validated = validator.validate(request);
+		Assert.assertEquals(request.getGender(), validated.getGender());
+
 	}
-	@Test(expected = InvalidParamException.class)
-	public void validateFailNull() {
+
+	@Test
+	public void genderFailEmpty() {
 		SubscriptionRequest request = SubscriptionRequest.builder().consent(Boolean.TRUE).dateOfBirth("1980-08-15")
-				.email(null).firstName("User of JUnit").gender(Gender.FEMALE.name().toLowerCase()).newsletterId(1234)
-				.build();
-		validator.validate(request);
+				.email("abc@ad.com").firstName("User of JUnit").gender("").newsletterId(1234).build();
+		SubscriptionRequest validated = validator.validate(request);
+		Assert.assertEquals(request.getGender(), validated.getGender());
 	}
 }

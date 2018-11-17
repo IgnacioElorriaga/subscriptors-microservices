@@ -21,3 +21,6 @@ hystrix:
       execution:
         isolation:
           strategy: SEMAPHORE
+
+date:
+  format: yyyy-MM-dd

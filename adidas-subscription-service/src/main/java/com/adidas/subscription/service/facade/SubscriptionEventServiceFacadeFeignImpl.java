@@ -11,37 +11,39 @@ import com.adidas.subscription.service.exceptions.UnknownException;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Slf4j
 public class SubscriptionEventServiceFacadeFeignImpl implements SubscriptionEventServiceFacade {
-	private EventServiceFeignClient client;
 	
+	private EventServiceFeignClient client;
+
 	@Autowired
 	public SubscriptionEventServiceFacadeFeignImpl(EventServiceFeignClient client) {
 		this.client = client;
 	}
-	
-	//@HystrixCommand(fallbackMethod = "fallbackExecuteEvent", commandKey = "executeEvent")
+
+	// @HystrixCommand(fallbackMethod = "fallbackExecuteEvent", commandKey =
+	// "executeEvent")
 	@Override
 	public void executeEvent(EventRequest request) {
 		try {
 			log.info("Processing request to event service");
 			log.debug("Request to process {}", request);
-			
-			EventResponse response = client.triggerSubscription("Basic YWRpZGFzLWRhdGFiYXNlLXNlcnZpY2U6MTIzNDU2",
-					request);
-			
+
+			EventResponse response = client.triggerSubscription(request);
+
 			log.info("Subscription executed. Response received: {}", response.getAnswer());
-			
-		}catch(HystrixRuntimeException e) {
+
+		} catch (HystrixRuntimeException e) {
 			throw new MicroserviceException(e);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new UnknownException(e);
 		}
 
 	}
 
-	public void fallbackExecuteEvent(EventRequest request) {
-		log.error("Hystrix circuit opened for event service. Doing nothing");
-	}
+//	public void fallbackExecuteEvent(EventRequest request) {
+//		log.error("Hystrix circuit opened for event service. Doing nothing");
+//	}
 }

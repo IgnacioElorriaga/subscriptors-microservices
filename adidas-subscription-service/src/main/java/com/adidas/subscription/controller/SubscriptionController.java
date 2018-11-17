@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adidas.subscription.client.model.SubscriptionRequest;
 import com.adidas.subscription.service.SubscriptionService;
 import com.adidas.subscription.service.dto.Response;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -73,7 +73,7 @@ public class SubscriptionController {
 			@RequestBody 
 			@Valid 
 			@ApiParam(value = "Body of the request") 
-			final SubscriptionRequest request) {
+					final SubscriptionRequest request) {
 		return service.createSubscription(request);
 
 	}

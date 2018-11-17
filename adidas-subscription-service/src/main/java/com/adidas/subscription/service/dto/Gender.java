@@ -28,10 +28,7 @@ public enum Gender {
 	}
 	
 	public static String lookup(Gender gender) {
-		return Arrays.stream(Gender.values())
-		.filter(g -> g.equals(gender))
-		.map(m -> m.name().toLowerCase())
-		.toString();
+		return gender.name().toLowerCase();
 		
 	}
 }

@@ -3,9 +3,10 @@ package com.adidas.subscription.client;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -35,6 +36,5 @@ public interface EventServiceFeignClient {
 			 consumes = APPLICATION_JSON_UTF8_VALUE, 
 			 produces = APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	EventResponse triggerSubscription(@RequestHeader("Authentication") final String username,
-			@RequestBody EventRequest body);
+	EventResponse triggerSubscription(@RequestBody @NotNull final EventRequest body);
 }

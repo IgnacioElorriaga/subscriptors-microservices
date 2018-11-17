@@ -1,8 +1,6 @@
 package com.adidas.subscription.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,6 +24,7 @@ import com.adidas.subscription.client.DatabaseServiceFeignClient;
 import com.adidas.subscription.client.EmailServiceFeignClient;
 import com.adidas.subscription.client.EventServiceFeignClient;
 import com.adidas.subscription.client.model.DatabaseResponse;
+import com.adidas.subscription.client.model.EventResponse;
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
@@ -37,11 +36,13 @@ public class SubscriptionControllerTest {
 	private WebApplicationContext wac;
 
 	private MockMvc mockMvc;
+	
 	@MockBean
 	private DatabaseServiceFeignClient clientDatabase;
 
 	@MockBean
 	private EmailServiceFeignClient clientEmail;
+	
 	@MockBean
 	private EventServiceFeignClient clientEvent;
 
@@ -58,7 +59,7 @@ public class SubscriptionControllerTest {
 
 		when(clientEmail.checkEmail(any())).thenReturn(Boolean.TRUE);
 
-		doNothing().when(clientEvent).triggerSubscription(anyString(), any());
+		when(clientEvent.triggerSubscription(any())).thenReturn(EventResponse.builder().answer("Ping OK").build());
 
 		mockMvc.perform(post("/subscriptions").contentType(APPLICATION_JSON)
 				.content("{\"email\":\"abc@ad.com\", \n" + "\"firstName\":\"Unity\", \n" + "\"gender\":\"male\", \n"

@@ -1,6 +1,8 @@
 package com.adidas.subscription.service.facade;
 
-import com.adidas.subscription.client.model.SubscriptionRequest;
+import javax.validation.constraints.NotNull;
+
+import com.adidas.subscription.client.model.DatabaseRequest;
 import com.adidas.subscription.service.dto.Subscription;
 
 public interface SubscriptionDatabaseFacade {
@@ -11,5 +13,5 @@ public interface SubscriptionDatabaseFacade {
 	 * @param subscription with the information to store
 	 * @return the ID generated.
 	 */
-	 Subscription save(SubscriptionRequest subscription);
+	Subscription save(@NotNull final DatabaseRequest subscription);
 }

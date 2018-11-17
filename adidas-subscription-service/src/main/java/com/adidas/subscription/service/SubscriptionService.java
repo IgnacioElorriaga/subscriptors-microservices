@@ -1,15 +1,16 @@
 package com.adidas.subscription.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adidas.subscription.client.model.DatabaseRequest;
+import com.adidas.subscription.client.model.EmailRequest;
 import com.adidas.subscription.client.model.EventRequest;
-import com.adidas.subscription.client.model.SubscriptionRequest;
-import com.adidas.subscription.service.dto.DateParam;
-import com.adidas.subscription.service.dto.EmailParam;
-import com.adidas.subscription.service.dto.Gender;
+import com.adidas.subscription.service.converter.SubscriptionRequestToDatabaseRequest;
+import com.adidas.subscription.service.converter.SubscriptionRequestToEmailRequest;
+import com.adidas.subscription.service.converter.SubscriptionToEventRequest;
 import com.adidas.subscription.service.dto.Response;
 import com.adidas.subscription.service.dto.Subscription;
+import com.adidas.subscription.service.dto.SubscriptionRequest;
 import com.adidas.subscription.service.facade.SubscriptionDatabaseFacade;
 import com.adidas.subscription.service.facade.SubscriptionEmailServiceFacade;
 import com.adidas.subscription.service.facade.SubscriptionEventServiceFacade;
@@ -34,15 +35,27 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class SubscriptionService {
-	@Autowired
-	private final SubscriptionEmailServiceFacade facadeEmail;
-	@Autowired
-	private final SubscriptionEventServiceFacade facadeEvent;
-	@Autowired
-	private final SubscriptionDatabaseFacade facadeDatabase;
 
-	private final Validator<EmailParam> emailAddressValidator;
-	private final Validator<DateParam> dateValidator;
+	private final SubscriptionEmailServiceFacade facadeEmail;
+	private final SubscriptionEventServiceFacade facadeEvent;
+	private final SubscriptionDatabaseFacade facadeDatabase;
+	private final Validator<SubscriptionRequest> requestValidator;
+	private final SubscriptionRequestToDatabaseRequest converter;
+	private final SubscriptionRequestToEmailRequest emailConverter;
+	private final SubscriptionToEventRequest eventConverter;
+	
+//	@Autowired
+//	public SubscriptionService(final SubscriptionEmailServiceFacade facadeEmail,
+//			final SubscriptionEventServiceFacade facadeEvent, final SubscriptionDatabaseFacade facadeDatabase,
+//			final Validator<SubscriptionRequest> requestValidator) {
+//		this.facadeEmail = facadeEmail;
+//		this.facadeEvent = facadeEvent;
+//		this.facadeDatabase = facadeDatabase;
+//		this.requestValidator = requestValidator;
+//
+//	}
+
+
 
 	/**
 	 * Executes the whole logic of the flow. It validates for the invalid data,
@@ -50,35 +63,55 @@ public class SubscriptionService {
 	 * facade (separating the logic between the model/service and the final
 	 * implementation) for each one.
 	 * 
-	 * @param request
-	 *            where is stored the input data to be processed.
+	 * @param request where is stored the input data to be processed.
 	 * @return the id of the new Subscription.
 	 */
 	public Response createSubscription(final SubscriptionRequest request) {
-		valditeEmail(request.getEmail());
+		validateParameters(request);
 
 		// Avoid having it duplicated or in the camelcase
 		request.setEmail(request.getEmail().toLowerCase());
-
-		validateDateOfBirth(request.getDateOfBirth());
-		validateGender(request.getGender());
-
-		Subscription subscription = facadeDatabase.save(request);
-		facadeEvent.executeEvent(EventRequest.builder().subscriptionId(subscription.getSubscriptionId()).build());
-		facadeEmail.processEmail(request);
-		return Response.builder().subscriptionId(subscription.getSubscriptionId()).build();
+		
+		Subscription subscription = executeDatabase(request);
+		
+		executeEmail(request);
+		
+		executeEvent(subscription);
+		
+		return Response.builder()
+				.subscriptionId(subscription.getSubscriptionId())
+				.build();
 	}
 
-	private void valditeEmail(final String email) {
-		emailAddressValidator.validate(EmailParam.builder().email(email).build());
+	private void validateParameters(final SubscriptionRequest request) {
+		requestValidator.validate(request);
 	}
 
-	private void validateDateOfBirth(final String dateOfBirth) {
-		dateValidator.validate(DateParam.builder().date(dateOfBirth).build());
+	private DatabaseRequest convertToDatabaseRequest(final SubscriptionRequest request) {
+		return converter.convert(request);
 	}
 
-	private void validateGender(final String gender) {
-		Gender.obtainValue(gender);
+	private EmailRequest convertToEmailRequest(final SubscriptionRequest request) {
+		return emailConverter.convert(request);
 	}
 
+	private EventRequest convertToEventRequest(final Subscription request) {
+		return eventConverter.convert(request);
+	}
+
+	private void executeEvent(Subscription subscription) {
+		EventRequest eventRequest = convertToEventRequest(subscription);
+		facadeEvent.executeEvent(eventRequest);
+	}
+
+	private void executeEmail(SubscriptionRequest subscription) {
+		EmailRequest emailRequest = convertToEmailRequest(subscription);
+		facadeEmail.processEmail(emailRequest);
+
+	}
+
+	private Subscription executeDatabase(SubscriptionRequest request) {
+		DatabaseRequest databaseRequest = convertToDatabaseRequest(request);
+		return facadeDatabase.save(databaseRequest);
+	}
 }
