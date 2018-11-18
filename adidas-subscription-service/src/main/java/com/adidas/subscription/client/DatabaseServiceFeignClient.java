@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.adidas.subscription.client.model.DatabaseResponse;
 import com.adidas.subscription.client.model.DatabaseRequest;
+import com.adidas.subscription.client.model.DatabaseResponse;
 
 /**
  * Feign client to connect to the database. It will execute the indicated path,
  * looking for the microservice named as it is in the annotation
- * "adidas-database-service". Configuration is especified in the application.yml file.
+ * "adidas-database-service". Configuration is specified in the application.yml file.
  * 
  * @author nacho
  *

@@ -32,9 +32,21 @@ As I said, there are several Microservices developed. Now it is time to review t
 When a new consumer wants to know how to send us data, through the adidas-subscription-service microservice, it was developed the API contract with Swagger. For that reason, the user could download the information of the public method (currently only one) through:
 	- *API docs*: http://locahost:8096/v2/api-docs
 	- *Swagger UI*: http://locahost:8096/swagger-ui.html
-	
+### Architecture of the Microservice
+All of them have been developed with the same structure. Splitting the logic in several layers trying to make them scalable and reusable.
+
+Firstly, They have one layer for the API / Controller part and their DTO Beans used in the request.
+
+Secondly, there is a Service layer which will perform the main logic of the microservice, doing the validations and then executing the Façade method of each microservice or operation is required to be done.
+
+Thirdly, as I said there is one Façade which isolate the final implementation for which there is behind of that method. For instance, if we have to store a Subscription, for the service it doesn't matter if it is a Micro, database or whatever.
+
+Finally, inside the Façade layer, there are Beans used between the Service and the final implementation (a converter is required and created) and also the interfaces for the FeignClients to connect with others Microservices.
+
+For the Exception handling it was created an ExceptionHandler class with three own Exceptions (one for the invalid parameters format and two for the execution errors with the FeignClients).
+
 ## How To run it.
-It could be run with Maven or inside the Docker. Firstly, I want to point out where they will be built (at least the ports' configuration included for each one), because to simplify it I didn't any other profile than the *default* and no especific environment:
+It could be run with Maven or inside the Docker. Firstly, I want to point out where they will be built (at least the ports' configuration included for each one), because to simplify it I didn't any other profile than the *default* and no specific environment:
   - **adidas-eureka-server**, port=8010. Host=localhost
   - **adidas-database-service**, port=8094. Host=localhost
   - **adidas-email-service**, port=8090. Host=localhost
@@ -42,9 +54,14 @@ It could be run with Maven or inside the Docker. Firstly, I want to point out wh
   - **adidas-subscription-service**, port=8096. Host=localhost
 ### Maven form
 
-To run all of them in each project. First of all, it has to be run the eureka server and then each micro to be discovered.
+To run all of them in each project. First of all, it has to be run the eureka server and then each micro to be discovered and available for among them.
+
 ```sh
 $ mvn clean spring-boot:run
 ```
+
 ### Docker form
 
+```sh
+mvn install dockerfile:build
+```

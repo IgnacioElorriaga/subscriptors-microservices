@@ -1,4 +1,4 @@
-package subscriptions;
+package com.adidas.test;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,11 +31,11 @@ public abstract class SpringBootBaseIntegrationTest {
         return SERVER_URL + ":" + port + SUBSCRIPTIONS_ENDPOINT;
     }
  
-    ResponseEntity<Response> post(final SubscriptionRequest request) {
+    protected ResponseEntity<Response> post(final SubscriptionRequest request) {
         return restTemplate.postForEntity(subscriptionsEndpoint(), request, Response.class);
     }
  
-    SubscriptionRequest getContents() {
+    protected SubscriptionRequest getContents() {
         return restTemplate.getForEntity(subscriptionsEndpoint(), SubscriptionRequest.class).getBody();
     }
  

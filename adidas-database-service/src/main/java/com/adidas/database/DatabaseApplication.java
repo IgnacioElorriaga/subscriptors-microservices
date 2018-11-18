@@ -6,12 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableSwagger2
 @EnableWebMvc
 @EnableJpaRepositories("com.adidas.database.repository")
 public class DatabaseApplication {

@@ -2,7 +2,6 @@ package com.adidas.subscription.service.dto;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiParam;
@@ -17,7 +16,7 @@ import lombok.ToString;
 @Data
 public class SubscriptionRequest implements Serializable {
 
-	@NotBlank(message = "Email must be provided")
+	@NotNull(message = "Email must be provided")
 	@ApiParam(required = true, value = "The email of the user to subscribe", example = "abc@de.fg")
 	private String email;
 	

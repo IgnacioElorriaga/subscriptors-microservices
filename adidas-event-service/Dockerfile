@@ -5,7 +5,7 @@ VOLUME /tmp
 
 EXPOSE 8092
 
-ARG JAR_FILE=target/event-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/adidas-event-service-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} event.jar
 

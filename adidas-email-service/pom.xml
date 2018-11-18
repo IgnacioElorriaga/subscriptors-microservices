@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.adidas</groupId>
-	<artifactId>email</artifactId>
+	<artifactId>adidas-email-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -18,9 +18,10 @@
 		<version>2.1.0.RELEASE</version>
 		<relativePath />
 	</parent>
-	
-	
+
+
 	<properties>
+		<docker.image.prefix>adidas</docker.image.prefix>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -62,7 +63,7 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-<dependencyManagement>
+	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -90,15 +91,7 @@
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
 				</configuration>
-				<executions>
-					<execution>
-						<id>default</id>
-						<phase>install</phase>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
+
 			</plugin>
 		</plugins>
 	</build>

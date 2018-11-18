@@ -84,6 +84,39 @@ public class SubscriptionServiceTest {
 		verify(facadeEvent, times(1))
 				.executeEvent(EventRequest.builder().subscriptionId(id.getSubscriptionId()).build());
 	}
+	
+	@Test
+	public void createSubscriptionOkMandatory() {
+
+		SubscriptionRequest request = SubscriptionRequest.builder()
+				.consent(Boolean.TRUE)
+				.dateOfBirth(LocalDate.of(1980, 8, 15).toString())
+				.email("abc@ad.com")
+				.newsletterId(12)
+				.build();
+		
+		when(databaseConverter.convert(any(SubscriptionRequest.class))).thenReturn(DatabaseRequest.builder()
+				.consent(Boolean.TRUE)
+				.dateOfBirth(LocalDate.of(1980, 8, 15).toString())
+				.email("abc@ad.com")
+				.firstName("")
+				.newsletterId(12)
+				.gender(Gender.lookup(Gender.OTHER))
+				.build());
+		when(emailConverter.convert(any(SubscriptionRequest.class))).thenReturn(EmailRequest.builder().email(request.getEmail()).build());
+		when(eventConverter.convert(any(Subscription.class))).thenReturn(EventRequest.builder().subscriptionId(234).build());
+		
+		when(requestValidator.validate(any(SubscriptionRequest.class))).thenReturn(request);
+
+		Response id = service.createSubscription(request);
+
+		Assert.assertEquals(id.getSubscriptionId(), Integer.valueOf(234));
+
+		verify(facadeDatabase, times(1)).save(any(DatabaseRequest.class));
+		verify(facadeEmail, times(1)).processEmail(EmailRequest.builder().email("abc@ad.com").build());
+		verify(facadeEvent, times(1))
+				.executeEvent(EventRequest.builder().subscriptionId(id.getSubscriptionId()).build());
+	}
 
 	@Test(expected = InvalidParamException.class)
 	public void createSubscriptionFailedEmail() {

@@ -44,18 +44,6 @@ public class SubscriptionService {
 	private final SubscriptionRequestToEmailRequest emailConverter;
 	private final SubscriptionToEventRequest eventConverter;
 	
-//	@Autowired
-//	public SubscriptionService(final SubscriptionEmailServiceFacade facadeEmail,
-//			final SubscriptionEventServiceFacade facadeEvent, final SubscriptionDatabaseFacade facadeDatabase,
-//			final Validator<SubscriptionRequest> requestValidator) {
-//		this.facadeEmail = facadeEmail;
-//		this.facadeEvent = facadeEvent;
-//		this.facadeDatabase = facadeDatabase;
-//		this.requestValidator = requestValidator;
-//
-//	}
-
-
 
 	/**
 	 * Executes the whole logic of the flow. It validates for the invalid data,

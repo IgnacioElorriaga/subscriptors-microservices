@@ -5,7 +5,7 @@ VOLUME /tmp
 
 EXPOSE 8090
 
-ARG JAR_FILE=target/email-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/adidas-email-service-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} email.jar
 

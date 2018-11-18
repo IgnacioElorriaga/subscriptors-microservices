@@ -1,8 +1,10 @@
-package subscriptions;
+package com.adidas.test.steps;
 
 import java.time.LocalDate;
 
 import org.junit.Assert;
+
+import com.adidas.test.SpringBootBaseIntegrationTest;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

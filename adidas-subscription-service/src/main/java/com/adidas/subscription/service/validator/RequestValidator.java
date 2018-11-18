@@ -32,7 +32,8 @@ public class RequestValidator implements Validator<SubscriptionRequest> {
 		if (StringUtils.isEmpty(email)) {
 			throw new InvalidParamException("The email is not present. It is required");
 		}
-		if (!isValid(email)) {
+	
+		if (email.contains(" ") || !isValid(email)) {
 			throw new InvalidParamException("The format of the email is not correct.");
 		}
 
@@ -53,14 +54,21 @@ public class RequestValidator implements Validator<SubscriptionRequest> {
 		if (date.length() != 10) {
 			throw new InvalidParamException(String.format(DATE_EXCEPTION_MSG, FORMAT_DATE));
 		}
-
+		
 		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_DATE);
 		sdf.setLenient(false);
 		try {
 			sdf.parse(date);
+			
 		} catch (ParseException e) {
 			throw new InvalidParamException(e.getMessage());
 		}
+		//I want to keep it. This case of use should be reviewed with the final client / manager.
+		
+//		if(LocalDate.now().isBefore(LocalDate.parse(date))) {
+//			throw new InvalidParamException("Furute Date Of birth is not possible");
+//		}
+		
 	}
 
 	@Override
