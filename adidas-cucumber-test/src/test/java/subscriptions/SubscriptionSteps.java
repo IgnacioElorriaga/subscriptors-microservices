@@ -1,4 +1,4 @@
-package com.adidas.test.steps;
+package subscriptions;
 
 import java.time.LocalDate;
 
@@ -44,7 +44,6 @@ public class SubscriptionSteps extends SpringBootBaseIntegrationTest{
 	public void i_have_received_an_error(int arg1) throws Exception {
 		Assert.assertEquals(400, arg1);
 	}
-
 
 	@When("^the parameter \"([^\"]*)\" was not provided$")
 	public void the_parameter_was_not_provided(String arg1) throws Exception {

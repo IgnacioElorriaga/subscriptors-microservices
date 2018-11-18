@@ -19,7 +19,7 @@ import com.adidas.subscription.client.model.DatabaseResponse;
  * @author nacho
  *
  */
-@FeignClient(name = "adidas-database-service")
+@FeignClient(name = "adidas-database-service",fallback=DatabaseServiceFallback.class)
 public interface DatabaseServiceFeignClient {
 	
 	/**

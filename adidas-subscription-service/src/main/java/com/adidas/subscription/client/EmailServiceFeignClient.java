@@ -18,7 +18,7 @@ import com.adidas.subscription.client.model.Email;
  * @author nacho
  *
  */
-@FeignClient(name = "adidas-email-service")
+@FeignClient(name = "adidas-email-service",fallback=EmailServiceFallback.class)
 public interface EmailServiceFeignClient {
 
 	/**
@@ -29,7 +29,7 @@ public interface EmailServiceFeignClient {
 	 * @return true if it was fine the process or not.
 	 */
 	@RequestMapping(value = "/emails", method = POST,
-
 			consumes = APPLICATION_JSON_UTF8_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
-	Boolean checkEmail(@RequestBody Email body);
+	Boolean checkEmail(@RequestBody final Email body);
+	
 }

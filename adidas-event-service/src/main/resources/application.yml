@@ -9,15 +9,11 @@ server:
 spring:
   application:
     name: adidas-event-service
- 
+ribbon:
+    eureka:
+        enabled: true 
 logging: 
   level: 
     org: 
       springframework: 
         web: DEBUG
-security: 
-  user: 
-    name: user
-    password: password
-  basic: 
-    enabled: true

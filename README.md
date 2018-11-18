@@ -4,20 +4,22 @@ It was released a set of microservices which one interacts with the others and a
 ## Framework / Tools used
 There are several frameworks developed under Java 8 (using Streams) that I needed to use in order to achieve the requirements.
 
-  - **Maven**, which is a software project management and comprehension tool. And it is basically used for the management of the dependencies of the project (I could have used gradle as an alternative)
+  - **Maven**, which is a software project management and comprehension tool. And it is basically used for the management of the dependencies of the project (I could have used Gradle as an alternative)
   - **Spring boot**, it was mandatory for developing each microservice. And inside the Spring several ones (APIs / Libs / FW / ...) are required to perform different actions, such as:
   -- Eureka, to registry and discover each one among the others (server and clients)
   -- Open Feign (or simply Feign), in order to make HTTP executions between two microservices
     -- Spring Boot Web, because I am releasing web applications.
   -- HATEOAS, which gives us some APIs to create easily REST representations that follow the HATEOAS principle (Hypertext as the Engine of Application State).
+  - **Cache**, it was included an example of Hazelcast cache when a user performs one request and it is stored in the local Cache.
   - **JPA**, Java Persistence API. As I am creating a H2 database, in memory database, I would need that framework to access to it.
   - **Swagger**, used to generate the online documentation to make easier to the final consumers to create their own objects to access to me.
-	-- **Swagger-UI**, it was implemented in the public microservice the http://localhost:port/swagger-ui.html with the Swagger information for each public method to be consumed.
+	-- **Swagger-UI**, it was implemented in the public microservice the [Swagger UI HTML Page](http://localhost:port/swagger-ui.html) with the Swagger information for each public method to be consumed.
   - **Lombok**, it a code generator framework. Using it, I am reducing the amount of code that I have to develop (mainly used for DTO to generate the get's / set's /toString / constructors).
   - **Jackson**, used for the serialization / deserialization of the objects.
-  - **Mockito**, used for the Testing purpouses to fake the Objects outside the scope of whether the Unit Tests or Integrated Tests.
+  - **Mockito**, used for the Testing purposes to fake the Objects outside the scope of whether the Unit Tests or Integrated Tests.
   - **JUnit4**, mainly is for doing the Testing part.
   - **Cucumber**, it was created a project to show the BDD Testing
+  - **Postman**, tool used to test the application. A collection was included, check it at [adidas-challenge-collection.postman_collection.json](/adidas-challenge-collection.postman_collection.json) file
 
 # Content of the project
 As I said, there are several Microservices developed. Now it is time to review them:
@@ -30,8 +32,8 @@ As I said, there are several Microservices developed. Now it is time to review t
 
 ## Documentation
 When a new consumer wants to know how to send us data, through the adidas-subscription-service microservice, it was developed the API contract with Swagger. For that reason, the user could download the information of the public method (currently only one) through:
-	- *API docs*: http://locahost:8096/v2/api-docs
-	- *Swagger UI*: http://locahost:8096/swagger-ui.html
+	- *API docs*: <http://locahost:8096/v2/api-docs>
+	- *Swagger UI*: <http://locahost:8096/swagger-ui.html>
 ### Architecture of the Microservice
 All of them have been developed with the same structure. Splitting the logic in several layers trying to make them scalable and reusable.
 
@@ -52,6 +54,11 @@ It could be run with Maven or inside the Docker. Firstly, I want to point out wh
   - **adidas-email-service**, port=8090. Host=localhost
   - **adidas-event-service**, port=8092. Host=localhost
   - **adidas-subscription-service**, port=8096. Host=localhost
+  - **adidas-cucumber-test**, with the ```sh
+  $ mvn test
+  ```
+  command line will execute all of them.
+
 ### Maven form
 
 To run all of them in each project. First of all, it has to be run the eureka server and then each micro to be discovered and available for among them.

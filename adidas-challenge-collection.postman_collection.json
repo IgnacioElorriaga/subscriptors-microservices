@@ -1,0 +1,591 @@
+{
+	"info": {
+		"_postman_id": "cb5fbf01-83e1-49e3-adb6-1542713764f5",
+		"name": "adidas-challenge-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9d2da68-3654-4b3c-abed-df8b6c5506c3",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"subscriptionID is present\"] = response.subscriptionId !== null;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Michael Jordan\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"Michael.jordan@gmail.com\",\n\t\"gender\":\"male\",\n\t\"consent\": true,\n\t\"newsletterId\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Only Mandatory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48480881-50dd-480f-a042-bb6b0452ac2f",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"subscriptionID is present\"] = response.subscriptionId !== null;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"consent\": true,\n\t\"newsletterId\": 231\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gender Camelcase - Other -",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afd9dd72-41e8-4cd4-8eb0-40d63889ab81",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"subscriptionID is present\"] = response.subscriptionId !== null;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Larry Bird\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"larry.bird@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gender Camelcase - Female -",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "727088f9-016c-4f83-8395-224191e71952",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"subscriptionID is present\"] = response.subscriptionId !== null;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Breanna Stewart\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"breanna.Stewart@gmail.com\",\n\t\"gender\":\"FemaLe\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) No Date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d05b7489-fc91-44b9-a0d6-90113f2a210c",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) Date no valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2268d5a6-d582-40cf-8620-8b2def686f22",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"19801220\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) Date future",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2268d5a6-d582-40cf-8620-8b2def686f22",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"2019-10-10\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) No Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2c3027b-de39-42aa-a53c-698d85b18fcc",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) Email Incorrect",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2c3027b-de39-42aa-a53c-698d85b18fcc",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\": \"alex @ tech.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) Email Incorrect 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2c3027b-de39-42aa-a53c-698d85b18fcc",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Kevin Smith\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\": \"alextech.com\",\n\t\"gender\":\"MALE\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) No Consent",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b61ab760-0926-46e9-8c11-af81cdadfdca",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) No Newsletter ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e257d5ed-4668-47ab-9046-f7a21da71541",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"message is present\"] = response.message !== null;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"1980-12-20\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "(Invalid) Date no valid 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a79f144-3725-42e3-85d8-5f632009e6ae",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"var response = JSON.parse(responseBody);",
+							"tests[\"subscriptionID is not present\"] = response.subscriptionId === null;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"Alexia Smith\",\n\t\"dateOfBirth\": \"1981-02-29\",\n\t\"email\":\"alexia.smith@gmail.com\",\n\t\"gender\":\"Other\",\n\t\"consent\": true,\n\t\"newsletterId\": 12\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8096/subscriptions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8096",
+					"path": [
+						"subscriptions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

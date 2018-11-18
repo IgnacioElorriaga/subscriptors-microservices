@@ -2,7 +2,7 @@ package com.adidas.subscription.service.dto;
 
 import java.io.Serializable;
 
-import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 @Data
 @ToString
-@Api("Response of the creation process")
+@ApiModel("Response of the creation process")
 public class Response implements Serializable{
 
 	@ApiModelProperty(required = true, value = "Subscription ID generated", example = "12345")

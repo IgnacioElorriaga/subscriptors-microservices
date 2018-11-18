@@ -18,7 +18,7 @@ server:
 spring:
   application:
     name: adidas-subscription-service
-    
+ 
 feign:
   client:
     config:

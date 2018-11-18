@@ -23,7 +23,7 @@ import com.adidas.subscription.client.model.EventResponse;
  * @author nacho
  *
  */
-@FeignClient(name = "adidas-event-service")
+@FeignClient(name = "adidas-event-service", fallback= EventServiceFallback.class)
 public interface EventServiceFeignClient {
 
 	/**
@@ -37,4 +37,5 @@ public interface EventServiceFeignClient {
 			 produces = APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	EventResponse triggerSubscription(@RequestBody @NotNull final EventRequest body);
+
 }

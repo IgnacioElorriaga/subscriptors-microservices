@@ -5,7 +5,7 @@ VOLUME /tmp
 
 EXPOSE 8010
 
-ARG JAR_FILE=target/adidas-eureka-service-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/adidas-eureka-server-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} eureka.jar
 

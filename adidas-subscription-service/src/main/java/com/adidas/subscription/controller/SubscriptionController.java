@@ -3,14 +3,15 @@ package com.adidas.subscription.controller;
 import java.net.HttpURLConnection;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adidas.subscription.service.SubscriptionService;
@@ -44,7 +45,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @Validated
-@Api(value = "Subcriptior", description = "Creates a new Subscription for the user.")
+@Api(value = "Subcriptor", description = "Creates a new Subscription for the user.")
 public class SubscriptionController {
 
 	private SubscriptionService service;
@@ -57,22 +58,24 @@ public class SubscriptionController {
 	/**
 	 * Creates a new subscription with the information provided.
 	 * 
-	 * @param request
-	 *            with the values to be stored.
+	 * @param request with the values to be stored.
 	 * @return the Subscription ID generated.
 	 */
-	@CrossOrigin
 	@RequestMapping(path="/subscriptions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value= "Allows the user to subscribe to the newsletter", response = Response.class)
+	@ApiOperation(value= "Allows the user to subscribe to one newsletter", response = Response.class)
 	@ApiResponses({
 			@ApiResponse(code = HttpURLConnection.HTTP_OK, message = "Returns the created ID for that subscription"),
 			@ApiResponse(code = HttpURLConnection.HTTP_BAD_REQUEST, message = "Invalid parameters"),
 			@ApiResponse(code = HttpURLConnection.HTTP_INTERNAL_ERROR, message = "Unexpected error"), })
-	public @ApiParam("Response generated") Response 
+	public 
+	@ApiParam("Response generated") 
+	@ResponseBody
+	Response 
 	createSubscription(
 			@RequestBody 
 			@Valid 
-			@ApiParam(value = "Body of the request") 
+			@NotNull
+			@ApiParam(value = "Body of the request", required = true) 
 					final SubscriptionRequest request) {
 		return service.createSubscription(request);
 

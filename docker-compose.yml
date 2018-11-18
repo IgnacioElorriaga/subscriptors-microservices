@@ -1,0 +1,80 @@
+version: '2.2'
+services:
+    adidas-database-service:
+        container_name: adidas-database-service
+        build:
+            context: adidas-database-service
+            dockerfile: Dockerfile
+        image: adidas-database-service:latest
+        expose:
+            - 8094
+        ports:
+            - 8094:8094
+        networks:
+            - emp-network
+    adidas-eureka-service:
+        container_name: adidas-eureka-server
+        build:
+            context: adidas-eureka-server
+            dockerfile: Dockerfile
+        image: adidas-eureka-server:latest
+        expose:
+            - 8010
+        ports:
+            - 8010:8010
+        networks:
+            - emp-network
+    adidas-event-service:
+        container_name: adidas-event-service
+        build:
+            context: adidas-event-service
+            dockerfile: Dockerfile
+        image: adidas-event-service:latest
+
+        expose:
+            - 8092
+        ports:
+            - 8092:8092
+        networks:
+            - emp-network
+        links:
+            - adidas-eureka-service:adidas-eureka-service
+        depends_on:
+            - adidas-eureka-service
+    adidas-email-service:
+        container_name: adidas-email-service
+        build:
+            context: adidas-email-service
+            dockerfile: Dockerfile
+        image: adidas-email-service:latest
+
+        expose:
+            - 8090
+        ports:
+            - 8090:8090
+        networks:
+            - emp-network
+        links:
+            - adidas-eureka-service:adidas-eureka-service
+        depends_on:
+            - adidas-eureka-service
+    adidas-subscription-service:
+        container_name: adidas-subscription-service
+        build:
+            context: adidas-subscription-service
+            dockerfile: Dockerfile
+        image: adidas-subscription-service:latest
+
+        expose:
+            - 8096
+        ports:
+            - 8096:8096
+        networks:
+            - emp-network
+        links:
+            - adidas-eureka-service:adidas-eureka-service
+        depends_on:
+            - adidas-eureka-service
+networks:
+    emp-network:
+        driver: bridge

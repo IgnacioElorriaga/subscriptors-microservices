@@ -1,5 +1,6 @@
 package com.adidas.subscription.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.adidas.subscription.client.model.DatabaseRequest;
@@ -54,6 +55,7 @@ public class SubscriptionService {
 	 * @param request where is stored the input data to be processed.
 	 * @return the id of the new Subscription.
 	 */
+	@Cacheable("subscriptions")
 	public Response createSubscription(final SubscriptionRequest request) {
 		validateParameters(request);
 
